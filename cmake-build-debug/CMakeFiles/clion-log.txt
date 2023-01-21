@@ -1,0 +1,4 @@
+"Z:\Desktop\Coding\CLion\CLion 2022.1.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=Z:/Desktop/Coding/CLion/CLion 2022.1.1/bin/ninja/win/ninja.exe" -G Ninja -S "Z:\Desktop\Weber State Univesity\Classes\CS 2420\Assignments\05 Try it Out Linear Probing" -B "Z:\Desktop\Weber State Univesity\Classes\CS 2420\Assignments\05 Try it Out Linear Probing\cmake-build-debug"
+-- Configuring done
+-- Generating done
+-- Build files have been written to: Z:/Desktop/Weber State Univesity/Classes/CS 2420/Assignments/05 Try it Out Linear Probing/cmake-build-debug
