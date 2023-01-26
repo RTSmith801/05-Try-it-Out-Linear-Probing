@@ -1,14 +1,40 @@
 #include <iostream>
 #include "LinearHashtable.h"
 void testHash();
+void userTest();
 bool checkTest(std::string, int, int);
 bool checkTest(std::string, std::string, std::string);
 int main()
 {
+    //userTest();
+
     std::cout << "Linear Hashing!" << std::endl;
     testHash();
+
     return 0;
 }
+
+void userTest(){
+    std::cout << "***User Testing***" << std:: endl;
+    LinearHashtable<int> htable(9);
+    htable.add(9);
+    std::cout << htable << std:: endl;
+    htable.add(200);
+    std::cout << htable << std:: endl;
+    htable.add(18);
+    std::cout << htable << std:: endl;
+    htable.add(27);
+    std::cout << htable << std:: endl;
+    htable.remove(9);
+    std::cout << htable << std:: endl;
+    htable.add(8);
+    std::cout << htable << std:: endl;
+    htable.add(17);
+    std::cout << htable << std:: endl;
+    std::cout << "***End User Testing***" << std:: endl;
+}
+
+
 void testHash(){
     LinearHashtable<int> htable(9);
     htable.add(9);
@@ -46,9 +72,8 @@ whatItIs) {
         return true;
     }
     else {
-        std::cout << "****** Failed test " << testName << " ****** " << std::endl << "
-        Output was " << whatItIs << std::endl << "     Output should have been " <<
-        whatItShouldBe << std::endl;
+        std::cout << "****** Failed test " << testName << " ****** " << std::endl << "Output was " << whatItIs
+        << std::endl << "Output should have been " << whatItShouldBe << std::endl;
         return false;
     }
 }
