@@ -14,24 +14,10 @@ int main()
     return 0;
 }
 
-void userTest(){
-    std::cout << "***User Testing***" << std:: endl;
-    LinearHashtable<int> htable(9);
-    htable.add(9);
-    std::cout << htable << std:: endl;
-    htable.add(200);
-    std::cout << htable << std:: endl;
-    htable.add(18);
-    std::cout << htable << std:: endl;
-    htable.add(27);
-    std::cout << htable << std:: endl;
-    htable.remove(9);
-    std::cout << htable << std:: endl;
-    htable.add(8);
-    std::cout << htable << std:: endl;
-    htable.add(17);
-    std::cout << htable << std:: endl;
-    std::cout << "***End User Testing***" << std:: endl;
+void userTest(LinearHashtable<int> name){
+    std::cout << "***User Test***" << std::endl;
+    std::cout << name;
+    std::cout << "***End User Test***" << std::endl;
 }
 
 
@@ -51,6 +37,7 @@ void testHash(){
     htable.add(8);
     htable.add(17);
     checkTest("#7 Checking Replacing: ", 17, htable[0]);
+
     for(int i = 0; i < 4; i++){
         htable.add(i* 5);
     }

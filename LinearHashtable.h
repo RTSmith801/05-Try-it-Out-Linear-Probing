@@ -13,9 +13,6 @@
 #include <iostream>
 #include <iomanip>
 
-
-///I'm having trouble getting this to work...
-///This would create a bucket that allows for holding the value as well as bools for empty and emptySinceStart
 template <class T>
 struct bucket{
     T val;
@@ -42,19 +39,13 @@ public:
     bool full(); //Determines if the hashtable has reached capacity
     int size(); //Determines the max capacity of the hashtable
     bool empty(); //returns true if the hashtable is empty
-    //Type &operator[] (int ndx); //returns the value at position ndx
     T &operator[] (int ndx); //Using 'T' vs 'Type'
     friend std::ostream& operator<< <>(std::ostream& out, const LinearHashtable<T>& t); //Allows the user to output the hashtable
 
 protected:
     int size_; // current size of the hashtable
     int capacity_; //max size of the hashtable
-
-    ///hashtable I would like to use here:
     bucket<T>* hashtable;
-
-    ///working pointer here...
-//    T* hashtable; //list of pointers
 };
 
 //Constructor, that initializes the hashtable.  It initializes the array for storing the data to size capacity.
@@ -64,15 +55,11 @@ LinearHashtable<T>::LinearHashtable(int capacity){
     ///Constructor I would like to use here:
     size_ = 0;
     capacity_ = capacity;
-    hashtable = nullptr;
-
-//    ///Working constructor here...
-//    size_ = 0;
-//    capacity_ = capacity;
-//    hashtable = new T[capacity_];
-//    for (int i = 0; i < capacity_; i++) {
-//        hashtable[i] = -1; // -1 represents empty space in hashtable
-//    }
+    //hashtable = nullptr;
+    hashtable = new bucket<T>[capacity_];
+    for (int i = 0; i < capacity_; i++) {
+        hashtable[i].val = -1; // -1 represents empty space in hashtable
+    }
 }
 
 //Deallocates memory used from the array pointer.*
@@ -84,7 +71,6 @@ LinearHashtable<T>::~LinearHashtable(){
 //Adds an item to the array, if a collision occurs, it will try the next position until it finds an empty position.  If the hashtable is at
 template<class T>
 void LinearHashtable<T>::add(T item){
-
     if(full()){
         throw std::runtime_error("Hashtable is full");
     }
@@ -107,20 +93,6 @@ void LinearHashtable<T>::add(T item){
             bucket = (bucket + 1) % capacity_;
             bucketsProbed++;
         }
-
-        ///Working function that I don't much care for..
-//        while (bucketsProbed < capacity_) {
-//            if (hashtable[bucket] == -1) // if open, add key.
-//            {
-//                hashtable[bucket] = item;
-//                size_++;
-//                return;
-//            }
-//
-//            //if bucket is not empty find next bucket
-//            bucket = (bucket + 1) % capacity_;
-//            bucketsProbed++;
-//        }
     }
 }
 
@@ -135,19 +107,9 @@ bool LinearHashtable<T>::contains(T item){
     int bucket = item % capacity_;
     int bucketsProbed = 0;
     while (bucketsProbed < capacity_) {
-
-        ///function I would like to use:
         if(hashtable[bucket].val == item){
             return true;
         }
-
-        ///working function
-//        if (hashtable[bucket] == item) // if open, add key.
-//        {
-//            return true;
-//        }
-
-        //if bucket is not empty find next bucket
         bucket = (bucket + 1) % capacity_;
         bucketsProbed++;
     }
@@ -164,23 +126,12 @@ bool LinearHashtable<T>::remove(T item){
     int bucket = item % capacity_;
     int bucketsProbed = 0;
     while (bucketsProbed < capacity_) {
-
-        ///function I would like to use:
         if(hashtable[bucket].val == item){
             hashtable[bucket].val = -1;
             hashtable[bucket].empty = true;
+            size_--;
             return true;
         }
-
-        ///working function
-//        if (hashtable[bucket] == item)
-//        {
-//            hashtable[bucket] = -1; //set bucket to -1 to show empty
-//            size_--;
-//            return true;
-//        }
-
-        //if target bucket did not match item, move to next bucket.
         bucket = (bucket + 1) % capacity_;
         bucketsProbed++;
     }
@@ -205,40 +156,23 @@ bool LinearHashtable<T>::empty(){
     return (size_ == 0);
 }
 
-//Not yet sure how to impliment this.
 //Type &operator[] (int ndx); //returns the value at position ndx
 template <class T>
 T& LinearHashtable<T>::operator[] (int ndx){
-    ///preferred method
     if(ndx > capacity_ || hashtable[ndx].val < 0){
         throw std::runtime_error("There is nothing at that index");
     }
     return hashtable[ndx].val;
-
-    ///working...
-//    if(ndx > capacity_ || hashtable[ndx] < 0){
-//        throw std::runtime_error("There is nothing at that index");
-//    }
-//    return hashtable[ndx];
 }
 
 //Allows the user to output the hashtable
 template<class T>
 std::ostream& operator<<(std::ostream& out, const LinearHashtable<T> & t){
-
-    ///Printing seems to be the crux of why I can't get my preferred hashtable to work...
     for(int i = 0; i < t.capacity_; i++){
         out << std::setw(0) << i << ": ";
-        out << t.hashtable->val;
+        out << t.hashtable[i].val;
         out << std::endl;
     }
-
-    ///working function below
-//    for(int i = 0; i < t.capacity_; i++){
-//        out << std::setw(0) << i << ": ";
-//        out << t.hashtable[i];
-//        out << std::endl;
-//    }
     return out;
 }
 
